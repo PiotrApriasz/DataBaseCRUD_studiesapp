@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLIinterface", "CLIinterface\CLIinterface.csproj", "{2684C287-ACEF-4DFB-86AB-9714DAD38316}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseManager", "DataBaseManager\DataBaseManager.csproj", "{298C1251-4950-4D10-9258-B48BCED5676B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{CF8C3778-2AA4-405D-A5AC-5F2630799309}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{2684C287-ACEF-4DFB-86AB-9714DAD38316}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2684C287-ACEF-4DFB-86AB-9714DAD38316}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2684C287-ACEF-4DFB-86AB-9714DAD38316}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298C1251-4950-4D10-9258-B48BCED5676B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298C1251-4950-4D10-9258-B48BCED5676B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298C1251-4950-4D10-9258-B48BCED5676B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298C1251-4950-4D10-9258-B48BCED5676B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF8C3778-2AA4-405D-A5AC-5F2630799309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF8C3778-2AA4-405D-A5AC-5F2630799309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF8C3778-2AA4-405D-A5AC-5F2630799309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF8C3778-2AA4-405D-A5AC-5F2630799309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
