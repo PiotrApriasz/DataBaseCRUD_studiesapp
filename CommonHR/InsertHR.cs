@@ -94,7 +94,7 @@ namespace CommonHR
             Console.WriteLine("Enter region name");
             string region_name = Console.ReadLine();
 
-            query = $"VALUES({region_id}, {region_name});";
+            query = $"VALUES({region_id}, '{region_name}');";
             return query;
         }
 
@@ -119,7 +119,7 @@ namespace CommonHR
             Console.WriteLine("Enter country id");
             string country_id = Console.ReadLine();
 
-            query = $"VALUES({location_id}, {street_address}, {postal_code}, {city}, {state_province}, {country_id});";
+            query = $"VALUES({location_id}, '{street_address}', '{postal_code}', '{city}', '{state_province}', '{country_id}');";
             return query;
         }
 
@@ -138,7 +138,7 @@ namespace CommonHR
             Console.WriteLine("Enter maximal salary");
             decimal.TryParse(Console.ReadLine(), out var max_salary);
 
-            query = $"VALUES({job_id}, {job_title}, {min_salary}, {max_salary});";
+            query = $"VALUES('{job_id}', '{job_title}', {min_salary}, {max_salary});";
             return query;
         }
 
@@ -160,7 +160,7 @@ namespace CommonHR
             Console.WriteLine("Enter department id");
             int.TryParse(Console.ReadLine(), out var department_id);
 
-            query = $"VALUES({employee_id}, {start_date}, {end_date}, {job_id}, {department_id});";
+            query = $"VALUES({employee_id}, '{start_date}', '{end_date}', '{job_id}', {department_id});";
             return query;
         }
 
@@ -200,8 +200,8 @@ namespace CommonHR
             Console.WriteLine("Enter department id");
             int.TryParse(Console.ReadLine(), out var department_id);
 
-            query = $"VALUES({employee_id}, {first_name}, {last_name}, {email}, {phone_number}, ";
-            query += $"{hire_date}, {job_id}, {salary}, {commision_pct}, {manager_id}, {department_id});";
+            query = $"VALUES({employee_id}, '{first_name}', '{last_name}', '{email}', '{phone_number}', ";
+            query += $"'{hire_date}', '{job_id}', {salary}, {commision_pct}, {manager_id}, {department_id});";
             return query;
         }
 
@@ -220,7 +220,7 @@ namespace CommonHR
             Console.WriteLine("Enter location id");
             int.TryParse(Console.ReadLine(), out var location_id);
 
-            query = $"VALUES({department_id}, {department_name}, {manager_id}, {location_id});";
+            query = $"VALUES({department_id}, '{department_name}', {manager_id}, {location_id});";
             return query;
         }
 
@@ -236,7 +236,7 @@ namespace CommonHR
             Console.WriteLine("Enter region id");
             int.TryParse(Console.ReadLine(), out var region_id);
 
-            query = $"VALUES({country_id}, {country_name}, {region_id});";
+            query = $"VALUES('{country_id}', '{country_name}', {region_id});";
             return query;
         }
     }

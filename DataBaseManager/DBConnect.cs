@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using CommonHR;
 
 namespace DataBaseManager
 {
@@ -104,7 +105,19 @@ namespace DataBaseManager
         /// </summary>
         public void Insert()
         {
-            ChooseTable();
+            string query = "";
+            var table = ChooseTable();
+
+            query += InsertHR.TableSwitcher(table);
+            query += InsertHR.ValuesGetter(table);
+
+            if (OpenConnection())
+            {
+                var cmd = new MySqlCommand(query, _connection);
+                cmd.ExecuteNonQuery();
+
+                CloseConnection();
+            }
         }
 
         /// <summary>
@@ -142,7 +155,7 @@ namespace DataBaseManager
         /// <summary>
         /// Write all tables from data base. User can choose one by number
         /// </summary>
-        private void ChooseTable()
+        private int ChooseTable()
         {
             string query = "SHOW TABLES;";
             int counter = 1;
@@ -151,7 +164,7 @@ namespace DataBaseManager
             Console.WriteLine("Choose table which you want to edit");
             Console.WriteLine();
 
-            if (this.OpenConnection() == true)
+            if (OpenConnection())
             {
                 var cmd = new MySqlCommand(query, _connection);
                 var dataReader = cmd.ExecuteReader();
@@ -170,6 +183,8 @@ namespace DataBaseManager
             Console.WriteLine();
             Console.Write("-> ");
             int.TryParse(Console.ReadLine(), out table);
+
+            return table;
 
         }
 
