@@ -1,4 +1,5 @@
 ﻿using System;
+using DataBaseManager;
 
 namespace CLIinterface
 {
@@ -6,7 +7,9 @@ namespace CLIinterface
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var dataManager = new DBConnect();
+            
+            dataManager.Insert();
         }
     }
 }

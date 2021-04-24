@@ -104,7 +104,7 @@ namespace DataBaseManager
         /// </summary>
         public void Insert()
         {
-            
+            ChooseTable();
         }
 
         /// <summary>
@@ -137,6 +137,40 @@ namespace DataBaseManager
         public int Count()
         {
             return 1;
+        }
+
+        /// <summary>
+        /// Write all tables from data base. User can choose one by number
+        /// </summary>
+        private void ChooseTable()
+        {
+            string query = "SHOW TABLES;";
+            int counter = 1;
+            int table;
+
+            Console.WriteLine("Choose table which you want to edit");
+            Console.WriteLine();
+
+            if (this.OpenConnection() == true)
+            {
+                var cmd = new MySqlCommand(query, _connection);
+                var dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Console.Write(counter + ". ");
+                    Console.WriteLine(dataReader.GetString(0));
+                    counter++;
+                }
+                
+                dataReader.Close();
+                this.CloseConnection();
+            }
+
+            Console.WriteLine();
+            Console.Write("-> ");
+            int.TryParse(Console.ReadLine(), out table);
+
         }
 
         /// <summary>
