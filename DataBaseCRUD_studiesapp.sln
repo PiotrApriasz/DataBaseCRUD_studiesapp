@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseManager", "DataBase
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{CF8C3778-2AA4-405D-A5AC-5F2630799309}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonHR", "CommonHR\CommonHR.csproj", "{B0D0650F-037D-499A-8DAD-06F02EA292B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{CF8C3778-2AA4-405D-A5AC-5F2630799309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF8C3778-2AA4-405D-A5AC-5F2630799309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF8C3778-2AA4-405D-A5AC-5F2630799309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D0650F-037D-499A-8DAD-06F02EA292B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D0650F-037D-499A-8DAD-06F02EA292B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D0650F-037D-499A-8DAD-06F02EA292B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D0650F-037D-499A-8DAD-06F02EA292B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
