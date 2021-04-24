@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 
 namespace DataBaseManager
@@ -59,7 +60,25 @@ namespace DataBaseManager
         /// <returns></returns>
         private bool OpenConnection()
         {
-            return false;
+            try
+            {
+                _connection.Open();
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                switch (e.Number)
+                {
+                    case 0:
+                        Console.WriteLine("Cannot connect to server!");
+                        break;
+                    case 1045:
+                        Console.WriteLine("Invalid username or password, please try again");
+                        break;
+                }
+
+                return false;
+            }
         }
 
         /// <summary>
@@ -68,7 +87,16 @@ namespace DataBaseManager
         /// <returns></returns>
         private bool CloseConnection()
         {
-            return false;
+            try
+            {
+                _connection.Close();
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
 
         /// <summary>
