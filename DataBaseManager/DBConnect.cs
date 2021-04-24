@@ -32,5 +32,21 @@ namespace DataBaseManager
         private string _password;
 
         #endregion
+
+        #region Constructor
+
+        public DBConnect()
+        {
+            _server = "localhost";
+            _database = "hr";
+            _uid = "piotrek";
+            _password = "HasloDoBazy";
+            string connectionString;
+            connectionString = "SERVER=" + _server + ";" + "DATABASE=" + 
+                               _database + ";" + "UID=" + _uid + ";" + "PASSWORD=" + _password + ";";
+            _connection = new MySqlConnection(connectionString);
+        }
+
+        #endregion
     }
 }
