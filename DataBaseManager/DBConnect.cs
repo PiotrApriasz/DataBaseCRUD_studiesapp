@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using CommonHR;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace DataBaseManager
 {
@@ -105,6 +106,7 @@ namespace DataBaseManager
         /// </summary>
         public void Insert()
         {
+            Console.Clear();
             string query = "";
             var table = ChooseTable();
 
@@ -114,7 +116,11 @@ namespace DataBaseManager
             if (OpenConnection())
             {
                 var cmd = new MySqlCommand(query, _connection);
-                cmd.ExecuteNonQuery();
+                int numberOfRows = cmd.ExecuteNonQuery();
+                
+                Console.WriteLine();
+                Console.WriteLine(numberOfRows + " row(s) affected");
+                Console.ReadKey();
 
                 CloseConnection();
             }
