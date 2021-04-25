@@ -108,7 +108,7 @@ namespace DataBaseManager
             Console.Clear();
             string query = "";
 
-            Console.WriteLine("---Do you want to enter your own query or use simple creator?---");
+            Console.WriteLine("---Do you want to enter your own query or use creator?---");
             Console.WriteLine("--- 1. Own query");
             Console.WriteLine("--- 2. Creator");
             Console.WriteLine("----------------------------------------------------------------");
@@ -142,7 +142,7 @@ namespace DataBaseManager
             Console.Clear();
             string query = "";
 
-            Console.WriteLine("---Do you want to enter your own query or use simple creator?---");
+            Console.WriteLine("---Do you want to enter your own query or use creator?---");
             Console.WriteLine("--- 1. Own query");
             Console.WriteLine("--- 2. Creator");
             Console.WriteLine("----------------------------------------------------------------");
@@ -159,13 +159,14 @@ namespace DataBaseManager
                     query += Console.ReadLine();
                     break;
                 case "2":
-                    var table = ChooseTable();
-                    query += InsertHR.TableSwitcher(table);
-                    query += InsertHR.ValuesGetter(table);
+                    //TODO implement query creator 
+                    Console.WriteLine("\nFunction will be added in future!");
+                    Console.WriteLine("Press any key");
+                    Console.ReadKey();
                     break;
             }
             
-            ExecuteQuery(choose, query);
+            if (choose == "1") ExecuteQuery(choose, query);
         }
 
         /// <summary>
@@ -173,6 +174,34 @@ namespace DataBaseManager
         /// </summary>
         public void Delete()
         {
+            Console.Clear();
+            string query = "";
+
+            Console.WriteLine("---Do you want to enter your own query or use creator?---");
+            Console.WriteLine("--- 1. Own query");
+            Console.WriteLine("--- 2. Creator");
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.Write("-> ");
+
+            var choose = Console.ReadLine();
+
+            switch (choose)
+            {
+                case "1":
+                    Console.Write("Enter your DELETE query \n(delete from is already in query, start with )");
+                    Console.Write("\n-> DELETE FROM ");
+                    query += "delete from ";
+                    query += Console.ReadLine();
+                    break;
+                case "2":
+                    //TODO implement query creator 
+                    Console.WriteLine("\nFunction will be added in future!");
+                    Console.WriteLine("Press any key");
+                    Console.ReadKey();
+                    break;
+            }
+            
+            if (choose == "1") ExecuteQuery(choose, query);
         }
 
         /// <summary>
