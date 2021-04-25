@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using CommonHR;
-using Org.BouncyCastle.Asn1.Cms;
 
 namespace DataBaseManager
 {
@@ -108,21 +107,78 @@ namespace DataBaseManager
         {
             Console.Clear();
             string query = "";
-            var table = ChooseTable();
 
-            query += InsertHR.TableSwitcher(table);
-            query += InsertHR.ValuesGetter(table);
+            Console.WriteLine("---Do you want to enter your own query or use simple creator?---");
+            Console.WriteLine("--- 1. Own query");
+            Console.WriteLine("--- 2. Creator");
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.Write("-> ");
 
-            if (OpenConnection())
+            var choose = Console.ReadLine();
+
+            switch (choose)
             {
-                var cmd = new MySqlCommand(query, _connection);
-                int numberOfRows = cmd.ExecuteNonQuery();
-                
-                Console.WriteLine();
-                Console.WriteLine(numberOfRows + " row(s) affected");
-                Console.ReadKey();
+                case "1":
+                    Console.Write("Enter your INSERT query \n(insert into is already in query, start with columns names)");
+                    Console.Write("\n-> INSERT INTO ");
+                    query += "insert into ";
+                    query += Console.ReadLine();
+                    break;
+                case "2":
+                    var table = ChooseTable();
+                    query += InsertHR.TableSwitcher(table);
+                    query += InsertHR.ValuesGetter(table);
+                    break;
+            }
 
-                CloseConnection();
+            if (OpenConnection() && (choose == "1" || choose == "2"))
+            {
+                try
+                {
+                    var cmd = new MySqlCommand(query, _connection);
+                    int numberOfRows = cmd.ExecuteNonQuery();
+                
+                    Console.WriteLine();
+                    Console.WriteLine(numberOfRows + " row(s) affected");
+                    Console.WriteLine("Press any key");
+                    Console.ReadKey();
+                }
+                catch (MySqlException e)
+                {
+                    switch (e.Number)
+                    {
+                        case 1064:
+                            Console.WriteLine("\nThere is a syntax error in your query!");
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
+                            break;
+                        case 1054:
+                            Console.WriteLine("\nUnknown column!");
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
+                            break;
+                        case 1146:
+                            Console.WriteLine("\nTable you entered doesn't exists");
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
+                            break;
+                        default:
+                            Console.WriteLine("\nSomething is wrong with your query!");
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
+                            break;
+                    }
+                }
+                finally
+                {
+                    CloseConnection();
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nSomething went wrong!");
+                Console.WriteLine("Press any key");
+                Console.ReadKey();
             }
         }
 
