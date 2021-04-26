@@ -44,8 +44,7 @@ namespace DataBaseManager
             }
 
             Console.WriteLine();
-            Console.Write("-> ");
-            int.TryParse(Console.ReadLine(), out var choose);
+            var choose = AnsiConsole.Ask<int>("-> ");
 
             return choose;
 
