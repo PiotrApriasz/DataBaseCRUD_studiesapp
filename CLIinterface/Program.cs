@@ -8,7 +8,9 @@ namespace CLIinterface
     {
         static void Main(string[] args)
         {
-            var dataManager = new DBConnect();
+            Console.Clear();
+            string username = args[0];
+            string password = args[1];
 
             while (true)
             {
@@ -24,19 +26,27 @@ namespace CLIinterface
                 switch (mainMenu)
                 {
                     case "Insert":
-                        dataManager.Insert();
+                        var insert = new Insert(username, password);
+                        insert.ChooseModeMenu();
+                        insert.ExecuteQuery();
                         Console.Clear();
                         break;
                     case "Update":
-                        dataManager.Update();
+                        var update = new Update(username, password);
+                        update.ChooseModeMenu();
+                        update.ExecuteQuery();
                         Console.Clear();
                         break;
                     case "Delete":
-                        dataManager.Delete();
+                        var delete = new Delete(username, password);
+                        delete.ChooseModeMenu();
+                        delete.ExecuteQuery();
                         Console.Clear();
                         break;
                     case "Select":
-                        dataManager.Select();
+                        var select = new Select(username, password);
+                        select.ChooseModeMenu();
+                        select.ExecuteQuery();
                         Console.Clear();
                         break;
                     case "Exit":
