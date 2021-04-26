@@ -14,13 +14,20 @@ namespace CLIinterface
 
             while (true)
             {
+                AnsiConsole.MarkupLine("[red]WARNING: Note that in current verions if you add new table you can't use" +
+                                   " query qreator to perform operation on this table[/]");
+                AnsiConsole.MarkupLine("[red]Use Own query option instead[/]");
+                
+                var rule = new Rule();
+                AnsiConsole.Render(rule);
+                
                 var mainMenu = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("---What you want to do?---")
-                        .PageSize(6)
+                        .PageSize(7)
                         .AddChoices(new[]
                         {
-                            "Insert", "Update", "Delete", "Select", "Exit"
+                            "Insert", "Update", "Delete", "Select", "Create", "Exit"
                         }));
 
                 switch (mainMenu)
@@ -49,8 +56,15 @@ namespace CLIinterface
                         select.ExecuteQuery();
                         Console.Clear();
                         break;
+                    case "Create":
+                        var create = new Create(username, password);
+                        create.ChooseModeMenu();
+                        create.ExecuteQuery();
+                        Console.Clear();
+                        break;
                     case "Exit":
                         Environment.Exit(0);
+                        Console.Clear();
                         break;
                 }
             }
