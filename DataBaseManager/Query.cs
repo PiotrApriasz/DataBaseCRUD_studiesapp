@@ -128,6 +128,12 @@ namespace DataBaseManager
                             break;
                     }
                 }
+                catch (InvalidOperationException)
+                {
+                    Console.WriteLine("ERROR: You performed operation by query from creator on table created by you!");
+                    Console.WriteLine("Press any key");
+                    Console.ReadKey();
+                }
                 finally
                 {
                     Connector.CloseConnection();
