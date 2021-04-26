@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using MySql.Data.MySqlClient;
 using CommonHR;
+using Spectre.Console;
+using Spectre.Console.Rendering;
 
 namespace DataBaseManager
 {
@@ -131,7 +135,7 @@ namespace DataBaseManager
                     break;
             }
 
-            ExecuteQuery(choose, query);
+            ExecuteQueryIUDC(choose, query);
         }
 
         /// <summary>
@@ -153,7 +157,7 @@ namespace DataBaseManager
             switch (choose)
             {
                 case "1":
-                    Console.Write("Enter your UPDATE query \n(update is already in query, start with )");
+                    Console.Write("Enter your UPDATE query \n(update is already in query, start with table name)");
                     Console.Write("\n-> UPDATE ");
                     query += "update ";
                     query += Console.ReadLine();
@@ -166,7 +170,7 @@ namespace DataBaseManager
                     break;
             }
             
-            if (choose == "1") ExecuteQuery(choose, query);
+            if (choose == "1") ExecuteQueryIUDC(choose, query);
         }
 
         /// <summary>
@@ -188,7 +192,7 @@ namespace DataBaseManager
             switch (choose)
             {
                 case "1":
-                    Console.Write("Enter your DELETE query \n(delete from is already in query, start with )");
+                    Console.Write("Enter your DELETE query \n(delete from is already in query, start with table name)");
                     Console.Write("\n-> DELETE FROM ");
                     query += "delete from ";
                     query += Console.ReadLine();
@@ -201,16 +205,114 @@ namespace DataBaseManager
                     break;
             }
             
-            if (choose == "1") ExecuteQuery(choose, query);
+            if (choose == "1") ExecuteQueryIUDC(choose, query);
         }
 
         /// <summary>
         /// Select statement
         /// </summary>
         /// <returns></returns>
-        public List <string> [] Select()
+        public void Select()
         {
-            return new List<string>[1];
+            Console.Clear();
+            string query = "";
+
+            Console.WriteLine("---Do you want to enter your own query or use creator?---");
+            Console.WriteLine("--- 1. Own query");
+            Console.WriteLine("--- 2. Creator");
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.Write("-> ");
+
+            var choose = Console.ReadLine();
+
+            switch (choose)
+            {
+                case "1":
+                    Console.Write("Enter your SELECT query \n(select is already in query, start with columns)");
+                    Console.Write("\n-> SELECT ");
+                    query += "select ";
+                    query += Console.ReadLine();
+                    break;
+                case "2":
+                    var table = ChooseTable();
+                    query += SelectHR.TableSwitcher(table);
+                    break;
+            }
+            
+            if (OpenConnection() && (choose == "1" || choose == "2"))
+            {
+                try
+                {
+                    var cmd = new MySqlCommand(query, _connection);
+                    var dataReader = cmd.ExecuteReader();
+                    var schemaTable = dataReader.GetSchemaTable();
+
+                    var table = new Table();
+                    
+                    foreach (DataRow column in schemaTable.Rows)
+                    {
+                        table.AddColumn(new TableColumn(
+                            column.Field<String>("ColumnName")).Centered());
+                    }
+                    
+                    while (dataReader.Read())
+                    {
+                        var entriesList = new List<string>();
+
+                        for (int i = 0; i < dataReader.FieldCount; i++)
+                        {
+                            entriesList.Add(dataReader[i].ToString());
+                        }
+
+                        string[] entries = entriesList.ToArray();
+                        
+                        table.AddRow(entries);
+                    }
+                    
+                    AnsiConsole.Render(table);
+
+                    dataReader.Close();
+                    
+                    Console.WriteLine("Press any key");
+                    Console.ReadKey();
+                }
+                catch (MySqlException e)
+                {
+                    switch (e.Number)
+                    {
+                        case 1064:
+                            Console.WriteLine("\nThere is a syntax error in your query!");
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
+                            break;
+                        case 1054:
+                            Console.WriteLine("\nUnknown column!");
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
+                            break;
+                        case 1146:
+                            Console.WriteLine("\nTable you entered doesn't exists");
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
+                            break;
+                        default:
+                            Console.WriteLine("\nSomething is wrong with your query!");
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
+                            break;
+                    }
+                }
+                finally
+                {
+                    CloseConnection();
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nSomething went wrong!");
+                Console.WriteLine("Press any key");
+                Console.ReadKey();
+            }
         }
 
         /// <summary>
@@ -272,7 +374,7 @@ namespace DataBaseManager
         {
         }
         
-        private void ExecuteQuery(string choose, string query)
+        private void ExecuteQueryIUDC(string choose, string query)
         {
             if (OpenConnection() && (choose == "1" || choose == "2"))
             {

@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <PackageReference Include="MySql.Data" Version="8.0.24" />
+      <PackageReference Include="Spectre.Console" Version="0.39.1-preview.0.7" />
     </ItemGroup>
 
     <ItemGroup>
