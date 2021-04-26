@@ -1,5 +1,6 @@
 ﻿using System;
 using DataBaseManager;
+using Spectre.Console;
 
 namespace CLIinterface
 {
@@ -11,36 +12,34 @@ namespace CLIinterface
 
             while (true)
             {
-                Console.WriteLine("---What you want to do?---");
-                Console.WriteLine("--- 1. Insert");
-                Console.WriteLine("--- 2. Update");
-                Console.WriteLine("--- 3. Delete");
-                Console.WriteLine("--- 4. Select");
-                Console.WriteLine("--- 5. Exit");
-                Console.WriteLine("--------------------------");
-                Console.Write("-> ");
+                var mainMenu = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("---What you want to do?---")
+                        .PageSize(6)
+                        .AddChoices(new[]
+                        {
+                            "Insert", "Update", "Delete", "Select", "Exit"
+                        }));
 
-                var choose = Console.ReadLine();
-
-                switch (choose)
+                switch (mainMenu)
                 {
-                    case "1":
+                    case "Insert":
                         dataManager.Insert();
                         Console.Clear();
                         break;
-                    case "2":
+                    case "Update":
                         dataManager.Update();
                         Console.Clear();
                         break;
-                    case "3":
+                    case "Delete":
                         dataManager.Delete();
                         Console.Clear();
                         break;
-                    case "4":
+                    case "Select":
                         dataManager.Select();
                         Console.Clear();
                         break;
-                    case "5":
+                    case "Exit":
                         Environment.Exit(0);
                         break;
                 }
